@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
+
 const SingleProduct = ({ product }) => {
-  const { title, description, price, rating, image } = product;
+  const { id, title, description, price, rating, image } = product;
 
   return (
     <div className="card bg-base-100 w-80 border">
@@ -15,9 +17,11 @@ const SingleProduct = ({ product }) => {
           <button className="py-2 px-5 text-sm font-bold bg-purple-700 text-white rounded ">
             Buy Now
           </button>
-          <button className="py-2 text-sm font-bold px-5 bg-purple-700 text-white rounded ">
-            Show Details
-          </button>
+          <Link to={`/detailsProduct/${id}`}>
+            <button className="py-2 text-sm font-bold px-5 bg-purple-700 text-white rounded ">
+              Show Details
+            </button>
+          </Link>
         </div>
       </div>
     </div>

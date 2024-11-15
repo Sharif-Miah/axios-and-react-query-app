@@ -4,24 +4,31 @@ import { FadeLoader } from "react-spinners";
 import SingleProduct from "./SingleProduct";
 
 const retridFetch = async ({ queryKey }) => {
-  const response = await axios.get(`http://localhost:3000/${queryKey}`);
+  const response = await axios.get(`http://localhost:3000/${queryKey[0]}`);
 
   return response.data;
 };
 
 const ProductList = () => {
-  const { data, error, isLoading } = useQuery({
+  const {
+    data: products,
+    error,
+    isLoading,
+  } = useQuery({
     queryKey: ["products"],
     queryFn: retridFetch,
   });
 
-  console.log(data, error, isLoading);
   if (isLoading) {
-    <FadeLoader />;
+    return (
+      <div className="flex justify-center align-item-center">
+        <FadeLoader />
+      </div>
+    );
   }
 
   if (error) {
-    <p>{error.message}</p>;
+    return <p>Aucard Error is :{error.message}</p>;
   }
 
   return (
@@ -30,7 +37,7 @@ const ProductList = () => {
         Product List
       </h2>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
-        {data?.map((product) => (
+        {products?.map((product) => (
           <SingleProduct key={product.id} product={product} />
         ))}
       </div>
