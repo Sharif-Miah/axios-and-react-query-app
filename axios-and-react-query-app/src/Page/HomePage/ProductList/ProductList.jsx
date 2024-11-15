@@ -3,8 +3,8 @@ import axios from "axios";
 import { FadeLoader } from "react-spinners";
 import SingleProduct from "./SingleProduct";
 
-const retridFetch = async () => {
-  const response = await axios.get(`http://localhost:3000/products`);
+const retridFetch = async ({ queryKey }) => {
+  const response = await axios.get(`http://localhost:3000/${queryKey}`);
 
   return response.data;
 };

@@ -11,9 +11,12 @@ const SingleProduct = ({ product }) => {
         <p className="text-xl font-semibold">${price}</p>
         <p className="text-md font-bold">Rating: {rating.rate}</p>
         <p>{description.slice(0, 100)}</p>
-        <div className="card-actions ">
-          <button className="py-2 px-8 bg-purple-700 text-white rounded ">
+        <div className="flex justify-between gap-4 ">
+          <button className="py-2 px-5 text-sm font-bold bg-purple-700 text-white rounded ">
             Buy Now
+          </button>
+          <button className="py-2 text-sm font-bold px-5 bg-purple-700 text-white rounded ">
+            Show Details
           </button>
         </div>
       </div>
