@@ -1,26 +1,28 @@
 // import { Link, useLoaderData } from "react-router-dom";
 
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { FadeLoader } from "react-spinners";
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
 
-const retridFetch = async ({ queryKey }) => {
-  const response = await axios.get(
-    `http://localhost:3000/${queryKey[0]}/${queryKey[1]}`
-  );
+const DetailsProduct = () => {
+  const { id } = useParams();
 
-  console.log(response.data);
+  console.log(id);
 
-  return response.data;
-};
+  const retridFetch = async ({ queryKey }) => {
+    const response = await axios.get(
+      `http://localhost:3000/${queryKey[0]}/${queryKey[1]}`
+    );
+    return response.data;
+  };
 
-const DetailsProduct = ({ id }) => {
   const {
     data: product,
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["products", id],
+    queryKey: ['products', id],
     queryFn: retridFetch,
   });
 
@@ -28,7 +30,7 @@ const DetailsProduct = ({ id }) => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center align-item-center">
+      <div className='flex justify-center align-item-center'>
         <FadeLoader />
       </div>
     );
@@ -45,22 +47,26 @@ const DetailsProduct = ({ id }) => {
   //   const { image, title, price, rating, description } = data;
 
   return (
-    <div className="flex justify-center items-center my-10">
-      <div className="card bg-base-100 w-3/6 border ">
+    <div className='flex justify-center items-center my-10'>
+      <div className='card bg-base-100 w-3/6 border '>
         <figure>
-          <img className="w-56 h-56" src={image} alt="Shoes" />
+          <img
+            className='w-56 h-56'
+            src={image}
+            alt='Shoes'
+          />
         </figure>
-        <div className="card-body justify-center items-center">
-          <h2 className="card-title text-center">{title}</h2>
-          <p className="text-xl font-semibold">${price}</p>
-          <p className="text-md font-bold">Rating: {rating?.rate}</p>
-          <p className="text-center">{description}</p>
-          <div className="flex flex-col  ">
-            <button className="py-2 px-5 text-sm font-bold bg-purple-700 text-white rounded ">
+        <div className='card-body justify-center items-center'>
+          <h2 className='card-title text-center'>{title}</h2>
+          <p className='text-xl font-semibold'>${price}</p>
+          <p className='text-md font-bold'>Rating: {rating?.rate}</p>
+          <p className='text-center'>{description}</p>
+          <div className='flex flex-col  '>
+            <button className='py-2 px-5 text-sm font-bold bg-purple-700 text-white rounded '>
               Buy Now
             </button>
-            <Link to="/">
-              <button className=" mt-3 underline text-sm font-bold  text-gray-500  ">
+            <Link to='/'>
+              <button className=' mt-3 underline text-sm font-bold  text-gray-500  '>
                 Go to home page
               </button>
             </Link>

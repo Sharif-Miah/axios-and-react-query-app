@@ -1,22 +1,25 @@
-import { createBrowserRouter } from "react-router-dom";
-import Main from "../Layout/Main";
-import DetailsProduct from "../Page/HomePage/DetailsProduct/DetailsProduct";
-import Home from "../Page/HomePage/Home";
+import { createBrowserRouter } from 'react-router-dom';
+import Main from '../Layout/Main';
+import DetailsProduct from '../Page/HomePage/DetailsProduct/DetailsProduct';
+import Home from '../Page/HomePage/Home';
+import AddProduct from '../Page/HomePage/AddProduct/AddProduct';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Main />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <Home />,
       },
       {
-        path: "/detailsProduct/:id",
+        path: '/detailsProduct/:id',
         element: <DetailsProduct />,
-        loader: async ({ params }) =>
-          fetch(`http://localhost:3000/products/${params.id}`),
+      },
+      {
+        path: '/add-product',
+        element: <AddProduct />,
       },
     ],
   },
