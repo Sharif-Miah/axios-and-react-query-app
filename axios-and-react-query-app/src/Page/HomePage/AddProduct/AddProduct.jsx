@@ -24,7 +24,7 @@ const AddProduct = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(state);
+
     const newData = { ...state, id: crypto.randomUUID().toString() };
     mutetion.mutate(newData);
   };
