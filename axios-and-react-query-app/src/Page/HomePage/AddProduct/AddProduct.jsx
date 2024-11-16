@@ -1,7 +1,8 @@
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const AddProduct = () => {
   const queryClient = new QueryClient();
@@ -13,6 +14,8 @@ const AddProduct = () => {
     description: '',
     image: '',
   });
+  const notify = () => toast.success('Product Added !');
+  const navigate = useNavigate();
 
   const mutetion = useMutation({
     mutationFn: (newProuct) =>
@@ -27,6 +30,8 @@ const AddProduct = () => {
 
     const newData = { ...state, id: crypto.randomUUID().toString() };
     mutetion.mutate(newData);
+    notify();
+    navigate('/');
   };
 
   const handleOnChange = () => {

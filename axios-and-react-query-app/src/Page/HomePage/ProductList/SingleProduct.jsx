@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const deleteProduct = async (productId) => {
   const response = await axios.delete(
@@ -13,6 +14,8 @@ const SingleProduct = ({ product }) => {
   const { id, title, description, price, rating, image } = product;
   const queryClient = useQueryClient();
 
+  const notify = () => toast.error('Product Delete !');
+
   const deleteMutetion = useMutation({
     mutationFn: deleteProduct,
     onSuccess: () => {
@@ -22,7 +25,7 @@ const SingleProduct = ({ product }) => {
 
   const handleDelete = (productId) => {
     deleteMutetion.mutate(productId);
-    console.log(productId);
+    notify();
   };
 
   return (
