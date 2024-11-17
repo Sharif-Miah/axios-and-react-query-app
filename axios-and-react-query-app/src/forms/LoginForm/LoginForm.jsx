@@ -9,10 +9,23 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm();
 
   const handForm = (formData) => {
     console.log(formData);
+
+    const user = { email: 'x@gmail.com', password: '123456789' };
+
+    const found =
+      formData.email === user.email && formData.password === user.password;
+
+    if (!found) {
+      setError('root.random', {
+        message: `User with email ${formData.email} is not found`,
+        type: 'random',
+      });
+    }
   };
 
   return (
@@ -56,6 +69,7 @@ const LoginForm = () => {
                 placeholder='Type your password'
               />
             </Field>
+            <div className='text-red-500'>{errors?.root?.random?.message}</div>
             <Field>
               <button
                 type='submit'

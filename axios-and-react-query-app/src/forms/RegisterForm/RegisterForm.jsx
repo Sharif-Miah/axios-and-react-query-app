@@ -102,7 +102,7 @@ const RegisterForm = () => {
             </Field>
           </div>
           <p className='font-medium'>
-            You have no account{' '}
+            You have already account{' '}
             <span className='underline'>
               <Link to='/login'>Login?</Link>
             </span>
