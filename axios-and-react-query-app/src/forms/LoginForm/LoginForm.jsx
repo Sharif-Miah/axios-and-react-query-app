@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-extra-boolean-cast */
 import FieldSet from '../../Sheard/FieldSet/FieldSet';
 import Field from '../../Sheard/Field/Field';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const LoginForm = () => {
   const {
@@ -11,21 +14,29 @@ const LoginForm = () => {
     formState: { errors },
     setError,
   } = useForm();
+  const { signIn } = useContext(AuthContext);
 
   const handForm = (formData) => {
     console.log(formData);
 
-    const user = { email: 'x@gmail.com', password: '123456789' };
+    signIn(formData.email, formData.password).then((result) => {
+      const user = result.user;
+      // console.log(user);
+      const loggedUser = {
+        email: user.email,
+      };
+      console.log(loggedUser);
+    });
 
-    const found =
-      formData.email === user.email && formData.password === user.password;
-
-    if (!found) {
-      setError('root.random', {
-        message: `User with email ${formData.email} is not found`,
-        type: 'random',
-      });
-    }
+    // const user = { email: 'x@gmail.com', password: '123456789' };
+    // const found =
+    //   formData.email === user.email && formData.password === user.password;
+    // if (!found) {
+    //   setError('root.random', {
+    //     message: `User with email ${formData.email} is not found`,
+    //     type: 'random',
+    //   });
+    // }
   };
 
   return (
