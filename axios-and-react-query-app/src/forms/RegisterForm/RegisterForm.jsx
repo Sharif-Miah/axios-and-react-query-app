@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { AiOutlineGoogle } from 'react-icons/ai';
 
 const RegisterForm = () => {
   const {
@@ -15,7 +16,8 @@ const RegisterForm = () => {
 
   const navigate = useNavigate();
 
-  const { registerWithEmailAndPassword } = useContext(AuthContext);
+  const { registerWithEmailAndPassword, signInWithGoogle } =
+    useContext(AuthContext);
 
   const handForm = async (formData) => {
     console.log(formData);
@@ -23,6 +25,15 @@ const RegisterForm = () => {
     try {
       await registerWithEmailAndPassword(formData.email, formData.password);
       navigate('/login');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleLogInWithGoogle = async () => {
+    try {
+      await signInWithGoogle();
+      navigate('/');
     } catch (err) {
       console.log(err);
     }
@@ -113,6 +124,14 @@ const RegisterForm = () => {
                 Register
               </button>
             </Field>
+
+            <div className='mt-3 text-center'>
+              <button
+                onClick={handleLogInWithGoogle}
+                className='text-2xl'>
+                <AiOutlineGoogle />
+              </button>
+            </div>
           </div>
           <p className='font-medium'>
             You have already account{' '}

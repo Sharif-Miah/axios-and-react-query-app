@@ -4,9 +4,8 @@ import FieldSet from '../../Sheard/FieldSet/FieldSet';
 import Field from '../../Sheard/Field/Field';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useContext } from 'react';
-// import { AuthContext } from '../../AuthProvider/AuthProvider';
-// import { registerWithEmailAndPassword } from '../../firebase/firebase.config';
+import { AiOutlineGoogle } from 'react-icons/ai';
+
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 
@@ -17,7 +16,7 @@ const LoginForm = () => {
     formState: { errors },
     setError,
   } = useForm();
-  const { signIn } = useContext(AuthContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handForm = async (formData) => {
@@ -39,6 +38,15 @@ const LoginForm = () => {
     //     type: 'random',
     //   });
     // }
+  };
+
+  const handleLogInWithGoogle = async () => {
+    try {
+      await signInWithGoogle();
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -90,6 +98,14 @@ const LoginForm = () => {
                 Login
               </button>
             </Field>
+            {/* social Log in with google and other */}
+            <div className='mt-3 text-center'>
+              <button
+                onClick={handleLogInWithGoogle}
+                className='text-2xl'>
+                <AiOutlineGoogle />
+              </button>
+            </div>
           </div>
           <p className='font-medium'>
             You have no account{' '}

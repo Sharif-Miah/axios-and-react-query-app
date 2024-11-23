@@ -1,14 +1,16 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { FiLogOut } from 'react-icons/fi';
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogOut = async () => {
     try {
       await logOut();
+      navigate('/login');
     } catch (err) {
       console.log(err);
     }
