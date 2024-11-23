@@ -2,7 +2,9 @@
 import FieldSet from '../../Sheard/FieldSet/FieldSet';
 import Field from '../../Sheard/Field/Field';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const RegisterForm = () => {
   const {
@@ -11,8 +13,19 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm();
 
-  const handForm = (formData) => {
+  const navigate = useNavigate();
+
+  const { registerWithEmailAndPassword } = useContext(AuthContext);
+
+  const handForm = async (formData) => {
     console.log(formData);
+
+    try {
+      await registerWithEmailAndPassword(formData.email, formData.password);
+      navigate('/login');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

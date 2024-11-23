@@ -1,6 +1,19 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { FiLogOut } from 'react-icons/fi';
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <header className='relative bg-white'>
       <p className='flex h-10 items-center justify-center bg-teal-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8'>
@@ -86,19 +99,32 @@ const Navbar = () => {
 
             <div className='ml-auto flex items-center'>
               <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
-                <Link
-                  to='/login'
-                  className='text-sm font-medium text-gray-700 hover:text-gray-800'>
-                  Login
-                </Link>
-                <span
-                  className='h-6 w-px bg-gray-200'
-                  aria-hidden='true'></span>
-                <a
-                  href='#'
-                  className='text-sm font-medium text-gray-700 hover:text-gray-800'>
-                  Create account
-                </a>
+                {user ? (
+                  <>
+                    <button
+                      onClick={handleLogOut}
+                      title='Log Out'>
+                      <FiLogOut className='text-xl font-bold' />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to='/login'
+                      className='text-sm font-medium text-gray-700 hover:text-gray-800'>
+                      Login
+                    </Link>
+                    <span
+                      className='h-6 w-px bg-gray-200'
+                      aria-hidden='true'></span>
+                    <Link
+                      to='/register'
+                      href='#'
+                      className='text-sm font-medium text-gray-700 hover:text-gray-800'>
+                      Create account
+                    </Link>
+                  </>
+                )}
               </div>
 
               <div className='hidden lg:ml-8 lg:flex'>
@@ -110,8 +136,6 @@ const Navbar = () => {
                     alt=''
                     className='block h-auto w-5 flex-shrink-0'
                   />
-                  <span className='ml-3 block text-sm font-medium'>CAD</span>
-                  <span className='sr-only'>, change currency</span>
                 </a>
               </div>
             </div>

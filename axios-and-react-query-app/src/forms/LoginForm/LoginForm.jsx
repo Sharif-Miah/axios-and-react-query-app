@@ -3,7 +3,10 @@
 import FieldSet from '../../Sheard/FieldSet/FieldSet';
 import Field from '../../Sheard/Field/Field';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+// import { useContext } from 'react';
+// import { AuthContext } from '../../AuthProvider/AuthProvider';
+// import { registerWithEmailAndPassword } from '../../firebase/firebase.config';
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 
@@ -15,18 +18,17 @@ const LoginForm = () => {
     setError,
   } = useForm();
   const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handForm = (formData) => {
+  const handForm = async (formData) => {
     console.log(formData);
 
-    signIn(formData.email, formData.password).then((result) => {
-      const user = result.user;
-      // console.log(user);
-      const loggedUser = {
-        email: user.email,
-      };
-      console.log(loggedUser);
-    });
+    try {
+      await signIn(formData.email, formData.password);
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
 
     // const user = { email: 'x@gmail.com', password: '123456789' };
     // const found =

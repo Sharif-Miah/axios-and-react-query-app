@@ -1,12 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from 'react';
-import app from '../firebase/firebase.config';
+
 import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
+import app from '../firebase/firebase.config';
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -15,14 +17,19 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const createUser = (email, password) => {
+  const registerWithEmailAndPassword = async (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    return await createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const signIn = (email, password) => {
+  const signIn = async (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    return await signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const logOut = async () => {
+    setLoading(true);
+    return await signOut(auth);
   };
 
   useEffect(() => {
@@ -37,10 +44,11 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const authInfo = {
-    createUser,
+    registerWithEmailAndPassword,
     signIn,
     user,
     loading,
+    logOut,
   };
 
   return (
